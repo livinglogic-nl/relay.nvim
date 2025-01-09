@@ -1,9 +1,9 @@
-# relay.nvim (under construction)
+# relay.nvim
 
-# goal
+# Goal
 Provide a way to view logs, long running tasks and short running tasks in an non-obtrusive way.
 
-# preview
+# Preview
 
 ```
 -----------
@@ -13,47 +13,42 @@ Provide a way to view logs, long running tasks and short running tasks in an non
 -----------
 ```
 
-# configuration
-
-The user can configure relay layouts globally and workdir specific:
-
-```sh
-~/relay.lua
-$CWD/relay.lua
-```
-
-## example
+# Initialize
 
 ```lua
-return {
-    lineToLog = {
-        ["lua-json-log"] = function(line)
-            local ok,obj = pcall(function()
-                return vim.fn.json_decode(line);
-            end)
-            if not ok then return nil end
-            return {
-                type = obj.level,
-                unix = obj.date * 1000,
-                text = obj.msg,
-            }
-        end
-    },
+-- initialize:
+local relay = require('relay')
+relay.init({
     sources = {
-        { name="log.nvim", type = "log", url = "/tmp/nvim-lua", l2l = "lua-json-log" },
-        { name="log.hammerspoon", type = "log", url = "/tmp/hs-lua", l2l = "lua-json-log" },
+        {
+            name = "relay.log",
+            app = require('relay.apps.tail').create( nvimLogFile('relay.nvim.log'), parseLua),
+            icon = "📕",
+        },
+        {
+            name = "date",
+            app = require('relay.apps.shell').create({ "date" }),
+            icon = "🕥",
+        },
     },
     layouts = {
-        {
-            "log.nvim",
-            "log.hammerspoon",
-        },
-        {
-            "log.nvim",
-        },
-    }
-}
+        { 'relay.log', 'date', },
+    },
+});
 ```
 
+# Open/close the sidebar
 
+```lua
+-- relay.open();
+-- relay.close();
+relay.toggle();
+```
 
+# Run adhoc shells
+
+```lua
+relay.run('zsh.shell', { 'zsh' });
+```
+
+# Much more readme coming soon!
