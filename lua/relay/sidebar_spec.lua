@@ -1,32 +1,32 @@
 local tu = require('relay.test_utils')
 
 describe('sidebar', function()
-  local config = require('relay.config')
   local wincount = function()
     return #vim.api.nvim_list_wins()
   end
+
   local sidebar = require('relay.sidebar')
   it('starts off closed', function()
-    require('relay').init(tu.defaultConfig)
+    require('relay').config(tu.defaultConfig)
     assert(wincount(), 1)
   end)
 
   it('opens on request', function()
     local ctx = tu.prepare({})
-    require('relay').init(vim.tbl_deep_extend('force', tu.defaultConfig, {
+    require('relay').config(vim.tbl_deep_extend('force', tu.defaultConfig, {
       sources = { tu.defaultSources[1] },
       layouts = {
         { 'a' },
       },
     }))
     assert.equals(wincount(), 1)
-    sidebar.open()
+    require('relay').open()
     assert.equals(wincount(), 2)
   end)
 
   it('shows the correct content in the windows', function()
     local ctx = tu.prepare({})
-    require('relay').init(vim.tbl_deep_extend('force', tu.defaultConfig, {
+    require('relay').config(vim.tbl_deep_extend('force', tu.defaultConfig, {
       sources = {
         {
           name = 'a',
@@ -42,7 +42,7 @@ describe('sidebar', function()
       },
     }))
 
-    sidebar.open()
+    require('relay').open()
     local buffers = tu.getSidebarBuffers()
     assert.same(buffers, {
       { 'content for a' },
@@ -52,16 +52,16 @@ describe('sidebar', function()
 
   it('closes on request', function()
     local ctx = tu.prepare({})
-    require('relay').init(vim.tbl_deep_extend('force', tu.defaultConfig, {
+    require('relay').config(vim.tbl_deep_extend('force', tu.defaultConfig, {
       sources = { tu.defaultSources[1] },
       layouts = {
         { 'a' },
       },
     }))
     assert.equals(wincount(), 1)
-    sidebar.open()
+    require('relay').open()
     assert.equals(wincount(), 2)
-    sidebar.close()
+    require('relay').close()
     assert.equals(wincount(), 1)
   end)
 
@@ -84,12 +84,9 @@ describe('sidebar', function()
 
   it('sidebar open() puts focus back to the original window', function()
     local before = vim.api.nvim_get_current_win()
-    require('relay').init(tu.defaultConfig)
+    require('relay').config(tu.defaultConfig)
     sidebar.open()
     local after = vim.api.nvim_get_current_win()
     assert.equal(before, after)
   end)
-
-  it('TODO: test job windows have a win bar', function() end)
-  it('TODO: test sidebar.isOpen', function() end)
 end)

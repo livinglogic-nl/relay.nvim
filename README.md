@@ -18,7 +18,7 @@ Provide a way to view logs, long running tasks and short running tasks in an non
 ```lua
 -- initialize:
 local relay = require('relay')
-relay.init({
+relay.config({
     sources = {
         {
             name = "relay.log",

@@ -1,6 +1,6 @@
 local M = {}
 
-M.init = function(global_config)
+M.config = function(global_config)
   local config = require('relay.config')
 
   config.init(global_config)
