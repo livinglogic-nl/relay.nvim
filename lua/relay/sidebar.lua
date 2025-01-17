@@ -22,8 +22,11 @@ M.listenForResize = function()
   M.onResize()
 end
 
+
 M.onResize = function()
-  M.canvas = M.calculateCanvas()
+  local newSize = M.calculateCanvas()
+  if newSize.w == M.canvas.w and newSize.h == M.canvas.h then return end
+  M.canvas = newSize;
   if M.isOpen() then
     M.open()
   end
@@ -122,8 +125,6 @@ end
 M.setWinbar = function(params)
   local values = {
     params.job.source.name,
-    params.win,
-    params.job.buf,
   }
   local icon = params.job.source.icon
   if icon ~= nil then
