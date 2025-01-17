@@ -47,14 +47,17 @@ end
 M.regenerateJobs = function()
   for _, job in pairs(M.jobs) do
     if job.ctx.healthy == false then
-      M.start(job.source)
+      M.start(job.source, true)
     end
   end
 end
 
-M.start = function(source)
+M.start = function(source, force)
   local job = M.jobs[source.name]
   if job ~= nil then
+    if force == false then
+      return
+    end
     M.stop(job)
   end
 

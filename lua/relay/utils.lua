@@ -42,7 +42,7 @@ M.getOtherWindows = function(wins)
   end, all)
 end
 
-M.openWindow = function(buf, dim)
+M._openWindow = function(buf, dim, border)
   return vim.api.nvim_open_win(buf, true, {
     relative = 'editor',
     col = dim.x,
@@ -50,8 +50,16 @@ M.openWindow = function(buf, dim)
     width = dim.w,
     height = dim.h,
     style = 'minimal',
-    border = 'none',
+    border = border,
   })
+end
+
+M.openWindow = function(buf, dim)
+  return M._openWindow(buf, dim, 'none')
+end
+
+M.openSingleBorderWindow = function(buf, dim)
+  return M._openWindow(buf, dim, 'single')
 end
 
 return M

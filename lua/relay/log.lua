@@ -92,7 +92,6 @@ log.new = function(config, standalone)
       return
     end
     local info = debug.getinfo(2, 'Sl')
-    local url = info.source .. ':' .. info.currentline
     if config.use_file then
       local fp = io.open(outfile, 'a')
       if fp == nil then
@@ -102,7 +101,7 @@ log.new = function(config, standalone)
       fp:write(vim.fn.json_encode({
         level = nameupper,
         date = os.time(os.date('!*t')),
-        url = url,
+        url = info.source .. ':' .. info.currentline,
         msg = msg,
       }) .. '\n')
       fp:close()

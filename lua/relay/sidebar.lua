@@ -22,11 +22,12 @@ M.listenForResize = function()
   M.onResize()
 end
 
-
 M.onResize = function()
   local newSize = M.calculateCanvas()
-  if newSize.w == M.canvas.w and newSize.h == M.canvas.h then return end
-  M.canvas = newSize;
+  if newSize.w == M.canvas.w and newSize.h == M.canvas.h then
+    return
+  end
+  M.canvas = newSize
   if M.isOpen() then
     M.open()
   end
@@ -140,11 +141,10 @@ end
 
 M.calculatePreviewFrame = function()
   local canvas = M.canvas
-  local margin = 0
   local sidebarWidth = M.getJobWindowWidth(canvas)
-  local previewWidth = canvas.w - sidebarWidth - margin
+  local previewWidth = canvas.w - sidebarWidth - vim.fn.getwininfo()[1].textoff
   return {
-    x = margin,
+    x = 0,
     y = 0,
     w = previewWidth,
     h = canvas.h,

@@ -7,9 +7,7 @@ M.init = function(global_config)
   config.loadLocal()
 
   require('relay.sidebar').listenForResize()
-  require('relay.runtime').startSources(config.sources)
   require('relay.timer').start('runtime', M.update, 80)
-
   M.addCommands()
 end
 
@@ -29,13 +27,25 @@ end
 
 M.open = function()
   if not require('relay.sidebar').isOpen() then
-    local localConfig = require('relay.config').loadLocal()
-    if localConfig.sources then
-      require('relay.runtime').startSources(localConfig.sources)
-    end
+    require('relay.config').loadLocal()
 
+    M.startLayoutJobs()
     require('relay.runtime').regenerateJobs()
     require('relay.sidebar').open()
+  end
+end
+
+M.startLayoutJobs = function()
+  local layout = require('relay.layout').getActive()
+
+  local sourcesMap = {}
+  vim.tbl_map(function(s)
+    sourcesMap[s.name] = s
+  end, require('relay.config').sources)
+
+  for _, name in ipairs(layout) do
+    local s = sourcesMap[name]
+    require('relay.runtime').start(s, false)
   end
 end
 
@@ -64,6 +74,7 @@ end
 
 M.activateLayout = function()
   if require('relay.sidebar').isOpen() then
+    M.startLayoutJobs()
     require('relay.sidebar').open()
   end
 end

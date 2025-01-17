@@ -20,7 +20,7 @@ M.show = function()
     local frame = require('relay.sidebar').calculatePreviewFrame()
 
     local owin = vim.api.nvim_get_current_win()
-    M.win = require('relay.utils').openWindow(M.buf, frame)
+    M.win = require('relay.utils').openSingleBorderWindow(M.buf, frame)
     vim.api.nvim_set_current_win(owin)
   end
   return M.win, M.buf
