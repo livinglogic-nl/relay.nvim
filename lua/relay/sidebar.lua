@@ -142,12 +142,12 @@ end
 M.calculatePreviewFrame = function()
   local canvas = M.canvas
   local sidebarWidth = M.getJobWindowWidth(canvas)
-  local previewWidth = canvas.w - sidebarWidth - vim.fn.getwininfo()[1].textoff
+  local previewWidth = canvas.w - sidebarWidth - vim.fn.getwininfo()[1].textoff - 2
   return {
     x = 0,
     y = 0,
     w = previewWidth,
-    h = canvas.h,
+    h = canvas.h - 2,
   }
 end
 

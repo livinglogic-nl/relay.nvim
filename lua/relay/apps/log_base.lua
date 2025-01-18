@@ -33,8 +33,6 @@ M.extend = function(methods)
     action = function(params, row)
       local log = getLog(params, row)
       local parts = vim.split(log.url, ':')
-      local file = parts[1]
-      local row = parts[2]
       vim.cmd('e ' .. parts[1])
       vim.api.nvim_win_set_cursor(0, { tonumber(parts[2]), 0 })
     end,

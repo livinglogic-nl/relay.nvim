@@ -26,7 +26,7 @@ M.getWinMinMax = function(jw)
 end
 
 M.setStripes = function(buf, wmin, wmax)
-  local winlines = vim.api.nvim_buf_get_lines(buf, wmin, wmax, true)
+  local winlines = vim.api.nvim_buf_get_lines(buf, wmin, wmax, false)
   for i = 1, #winlines, 2 do
     local line = winlines[i]
     local len = string.len(line)
@@ -61,12 +61,14 @@ M.show = function(jobWins)
 
   for _, jw in pairs(jobWinsWithAction) do
     local wmin, wmax = M.getWinMinMax(jw)
+
     M.setStripes(jw.job.buf, wmin, wmax)
 
-    local rows = jw.frame.h - 1
+    local lineCount = vim.api.nvim_buf_line_count(jw.job.buf)
+    local maxRows = math.min(jw.frame.h - 1, lineCount)
     table.insert(letters, '')
 
-    for row = 1, rows, 1 do
+    for row = 1, maxRows, 1 do
       if ai > #alphabet then
         table.insert(letters, ' ')
       else

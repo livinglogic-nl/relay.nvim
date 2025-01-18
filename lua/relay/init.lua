@@ -12,6 +12,10 @@ M.config = function(global_config)
 end
 
 M.addCommands = function()
+  vim.api.nvim_create_user_command('RelayToggle', M.toggle, {})
+  vim.api.nvim_create_user_command('RelayFocus', function(opts)
+    M.focusWindow(tonumber(opts.fargs[1]))
+  end, { nargs = 1 })
   vim.api.nvim_create_user_command('RelayAction', M.action, {})
 end
 
