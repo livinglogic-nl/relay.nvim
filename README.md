@@ -2,7 +2,7 @@
 - Run log tails and other tasks in a non-obtrusive way.
 
 # Demo
---- insert demo here
+[![relay.nvim demo on youtube](http://img.youtube.com/vi/Q-usLiX4KMY/0.jpg)](http://www.youtube.com/watch?v=Q-usLiX4KMY "relay.nvim demo")
 
 # Technical overview
 
