@@ -12,6 +12,8 @@ M.setup = function(global_config)
 end
 
 M.addCommands = function()
+  vim.api.nvim_create_user_command('RelayOpen', M.open, {})
+  vim.api.nvim_create_user_command('RelayClose', M.close, {})
   vim.api.nvim_create_user_command('RelayToggle', M.toggle, {})
   vim.api.nvim_create_user_command('RelayNext', M.nextLayout, {})
   vim.api.nvim_create_user_command('RelayPrev', M.prevLayout, {})
@@ -94,7 +96,7 @@ M.action = function()
 end
 
 M.adhoc = function(source)
-  require('relay.adhoc').addAdhoc(source);
+  require('relay.adhoc').addAdhoc(source)
   if require('relay.sidebar').isOpen() then
     require('relay.sidebar').open()
   end
@@ -108,7 +110,7 @@ M.run = function(name, args)
 end
 
 M.runDefault = function(args)
-  M.run('shell', args);
+  M.run('shell', args)
 end
 
 M._destroy = function()
