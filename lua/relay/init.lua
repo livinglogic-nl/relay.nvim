@@ -1,6 +1,6 @@
 local M = {}
 
-M.config = function(global_config)
+M.setup = function(global_config)
   local config = require('relay.config')
 
   config.init(global_config)
@@ -13,6 +13,8 @@ end
 
 M.addCommands = function()
   vim.api.nvim_create_user_command('RelayToggle', M.toggle, {})
+  vim.api.nvim_create_user_command('RelayNext', M.nextLayout, {})
+  vim.api.nvim_create_user_command('RelayPrev', M.prevLayout, {})
   vim.api.nvim_create_user_command('RelayFocus', function(opts)
     M.focusWindow(tonumber(opts.fargs[1]))
   end, { nargs = 1 })
@@ -91,12 +93,22 @@ M.action = function()
   require('relay.actions').show(jobWins)
 end
 
+M.adhoc = function(source)
+  require('relay.adhoc').addAdhoc(source);
+  if require('relay.sidebar').isOpen() then
+    require('relay.sidebar').open()
+  end
+end
+
 M.run = function(name, args)
-  require('relay.adhoc').addAdhoc({
+  return M.adhoc({
     name = name,
     app = require('relay.apps.shell').create(args),
   })
-  require('relay.sidebar').open()
+end
+
+M.runDefault = function(args)
+  M.run('shell', args);
 end
 
 M._destroy = function()
