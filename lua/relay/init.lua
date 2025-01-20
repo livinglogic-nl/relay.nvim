@@ -124,5 +124,4 @@ M._destroy = function()
   require('relay.timer')._destroy()
 end
 
-
 return M
