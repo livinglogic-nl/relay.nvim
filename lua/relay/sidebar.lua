@@ -108,6 +108,7 @@ M.update = function()
 
     jw.job.source.app.view({
       ctx = jw.job.ctx,
+      buf = jw.job.buf,
       win = jw.win,
       focused = jw.win == cur,
       preview = preview,

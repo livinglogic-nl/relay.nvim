@@ -1,8 +1,16 @@
 # relay.nvim
-- Run log tails and other tasks in a non-obtrusive way.
+Puts log info and other tasks in a sidebar and lazy starts them on command.
 
 # Demo
 [![relay.nvim demo on youtube](http://img.youtube.com/vi/Q-usLiX4KMY/0.jpg)](http://www.youtube.com/watch?v=Q-usLiX4KMY "relay.nvim demo")
+
+# Features
+- sidebar
+- global and cwd-local setup 
+- preview pane for the current row
+- actionable rows
+- adhoc sources that only live until the sidebar closes
+- easily extendable with your own apps
 
 # Technical overview
 

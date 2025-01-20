@@ -113,15 +113,16 @@ M.runDefault = function(args)
   M.run('shell', args)
 end
 
+M.focusWindow = function(nr)
+  local sidebar = require('relay.sidebar')
+  sidebar.focusWindow(nr)
+end
+
 M._destroy = function()
   require('relay.runtime')._destroy()
   require('relay.sidebar')._destroy()
   require('relay.timer')._destroy()
 end
 
-M.focusWindow = function(nr)
-  local sidebar = require('relay.sidebar')
-  sidebar.focusWindow(nr)
-end
 
 return M
